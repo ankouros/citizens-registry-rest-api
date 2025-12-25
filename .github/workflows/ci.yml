@@ -25,7 +25,8 @@ jobs:
       # START REST API
       - name: Start Citizen Service
         run: |
-          mvn -pl citizen-service spring-boot:run &
+          # mvn -pl citizen-service spring-boot:run &
+          mvn clean verify -pl citizen-it -am
           sleep 20
 
       # RUN INTEGRATION TESTS
