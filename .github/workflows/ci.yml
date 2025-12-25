@@ -1,0 +1,38 @@
+name: CI - Citizens Registry
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build & run unit tests
+        run: mvn clean test
+
+      - name: Run integration tests
+        run: mvn verify -pl citizen-it -am
+
+      - name: Upload unit test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports
+          path: "**/target/surefire-reports/*.xml"
+
+      - name: Upload integration test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-reports
+          path: "**/target/failsafe-reports/*.xml"
