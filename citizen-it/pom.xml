@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,6 +20,8 @@
     <!-- Dependencies          -->
     <!-- ===================== -->
     <dependencies>
+
+        <!-- Service under test -->
         <dependency>
             <groupId>gr.university</groupId>
             <artifactId>citizen-service</artifactId>
@@ -34,7 +36,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Rest-Assured for API testing -->
+        <!-- Rest-Assured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -48,6 +50,15 @@
     <!-- ===================== -->
     <build>
         <plugins>
+
+            <!-- Disable empty JAR creation -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
 
             <!-- Failsafe for integration tests -->
             <plugin>

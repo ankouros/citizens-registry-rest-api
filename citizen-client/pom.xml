@@ -28,16 +28,16 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- Spring Boot Core (CLI app) -->
+        <!-- Spring Boot core (CLI application) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- HTTP Client (RestTemplate / WebClient) -->
+        <!-- HTTP client (WebClient, RestTemplate) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
     </dependencies>
@@ -47,10 +47,7 @@
     <!-- ===================== -->
     <build>
         <plugins>
-<plugin>
-  <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-maven-plugin</artifactId>
-</plugin>
+
             <!-- Spring Boot executable JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>

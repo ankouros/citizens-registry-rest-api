@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -15,11 +16,13 @@
 
     <name>Citizen Registry - Domain</name>
 
+    <!-- Pure domain module (entities only, no Spring dependencies) -->
     <dependencies>
+
+        <!-- JPA API (version managed by Spring Boot BOM) -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
         </dependency>
 
         <!-- JUnit 5 for entity unit tests -->
@@ -28,5 +31,7 @@
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
+
 </project>
