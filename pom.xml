@@ -23,7 +23,8 @@
         <spring-boot.version>3.2.1</spring-boot.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <junit.version>5.10.0</junit.version>
         <restassured.version>5.4.0</restassured.version>
         <h2.version>2.2.224</h2.version>
