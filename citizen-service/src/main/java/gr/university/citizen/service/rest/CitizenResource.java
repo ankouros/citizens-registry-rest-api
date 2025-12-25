@@ -2,77 +2,78 @@ package gr.university.citizen.service.rest;
 
 import gr.university.citizen.domain.Citizen;
 import gr.university.citizen.service.core.CitizenService;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
- * REST resource for managing citizens.
- * The methods here are intentionally minimal and should be completed
- * according to the assignment's functional requirements.
+ * Spring REST controller for managing citizens.
  */
-@Path("/citizens")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@RestController
+@RequestMapping("/citizens")
 public class CitizenResource {
 
-    @Inject
-    private CitizenService citizenService;
+    private final CitizenService citizenService;
 
-    @GET
+    public CitizenResource(CitizenService citizenService) {
+        this.citizenService = citizenService;
+    }
+
+    @GetMapping
     public List<Citizen> getAll() {
         return citizenService.findAll();
     }
 
-    @GET
-    @Path("/{id}")
-    public Citizen getById(@PathParam("id") Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Citizen> getById(@PathVariable Long id) {
         try {
-            return citizenService.findById(id);
+            Citizen citizen = citizenService.findById(id);
+            return ResponseEntity.ok(citizen);
         } catch (IllegalArgumentException ex) {
-            throw new NotFoundException(ex.getMessage(), ex);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
-    @POST
-    public Response create(Citizen citizen) {
+    @PostMapping
+    public ResponseEntity<Citizen> create(@RequestBody Citizen citizen) {
         try {
             Citizen created = citizenService.create(citizen);
-            return Response.status(Response.Status.CREATED).entity(created).build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
         } catch (IllegalArgumentException ex) {
-            throw new BadRequestException(ex.getMessage(), ex);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @PUT
-    @Path("/{id}")
-    public Response update(@PathParam("id") Long id, Citizen citizen) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Citizen> update(
+            @PathVariable Long id,
+            @RequestBody Citizen citizen
+    ) {
         try {
             Citizen updated = citizenService.update(id, citizen);
-            return Response.ok(updated).build();
+            return ResponseEntity.ok(updated);
         } catch (IllegalArgumentException ex) {
-            throw mapToWebException(ex);
+            String msg = ex.getMessage();
+            if (msg != null && msg.toLowerCase().contains("not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @DELETE
-    @Path("/{id}")
-    public Response delete(@PathParam("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             citizenService.delete(id);
-            return Response.noContent().build();
+            return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException ex) {
-            throw mapToWebException(ex);
+            String msg = ex.getMessage();
+            if (msg != null && msg.toLowerCase().contains("not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-    }
-
-    private RuntimeException mapToWebException(IllegalArgumentException ex) {
-        String message = ex.getMessage();
-        if (message != null && message.toLowerCase().contains("not found")) {
-            return new NotFoundException(message, ex);
-        }
-        return new BadRequestException(message, ex);
     }
 }

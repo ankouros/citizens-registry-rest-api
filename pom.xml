@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>gr.university</groupId>
@@ -9,19 +10,30 @@
     <packaging>pom</packaging>
 
     <name>Citizen Registry - Parent</name>
-    <description>Multi-module Maven project for citizen registry REST service, client, and tests.</description>
+    <description>
+        Multi-module Maven project for citizen registry REST service,
+        domain model, client, and tests.
+    </description>
 
+    <!-- ===================== -->
+    <!-- Java & Versions       -->
+    <!-- ===================== -->
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <jersey.version>3.1.0</jersey.version>
-        <jakarta.ws.rs.version>3.1.0</jakarta.ws.rs.version>
         <junit.version>5.10.0</junit.version>
         <restassured.version>5.4.0</restassured.version>
         <h2.version>2.2.224</h2.version>
+
+        <!-- Spring Boot BOM version -->
+        <spring-boot.version>3.2.1</spring-boot.version>
     </properties>
 
+    <!-- ===================== -->
+    <!-- Modules               -->
+    <!-- ===================== -->
     <modules>
         <module>citizen-domain</module>
         <module>citizen-service</module>
@@ -29,59 +41,65 @@
         <module>citizen-it</module>
     </modules>
 
+    <!-- ===================== -->
+    <!-- Dependency Management -->
+    <!-- ===================== -->
     <dependencyManagement>
         <dependencies>
+
+            <!-- Spring Boot BOM (versions only, no auto deps) -->
             <dependency>
-                <groupId>org.glassfish.jersey.core</groupId>
-                <artifactId>jersey-common</artifactId>
-                <version>${jersey.version}</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.glassfish.jersey.core</groupId>
-                <artifactId>jersey-server</artifactId>
-                <version>${jersey.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.jersey.containers</groupId>
-                <artifactId>jersey-container-servlet</artifactId>
-                <version>${jersey.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.jersey.media</groupId>
-                <artifactId>jersey-media-json-binding</artifactId>
-                <version>${jersey.version}</version>
-            </dependency>
+
+            <!-- JUnit 5 -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>${junit.version}</version>
             </dependency>
+
+            <!-- Rest-Assured -->
             <dependency>
                 <groupId>io.rest-assured</groupId>
                 <artifactId>rest-assured</artifactId>
                 <version>${restassured.version}</version>
             </dependency>
+
+            <!-- H2 In-Memory Database -->
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${h2.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
+    <!-- ===================== -->
+    <!-- Build / Plugins       -->
+    <!-- ===================== -->
     <build>
         <pluginManagement>
             <plugins>
+
+                <!-- Java Compiler -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.11.0</version>
                     <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
                     </configuration>
                 </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
+
 </project>

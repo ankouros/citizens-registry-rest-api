@@ -1,15 +1,16 @@
 package gr.university.citizen.service.rest;
 
-import org.glassfish.jersey.server.ResourceConfig;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-/**
- * Jersey application configuration.
- * Registers REST resources under the specified package.
- */
-public class CitizenApplication extends ResourceConfig {
+@SpringBootApplication(scanBasePackages = "gr.university.citizen")
+@EnableJpaRepositories(basePackages = "gr.university.citizen.service.core")
+@EntityScan(basePackages = "gr.university.citizen.domain")
+public class CitizenApplication {
 
-    public CitizenApplication() {
-        // Register REST resource package
-        packages("gr.university.citizen.service.rest");
+    public static void main(String[] args) {
+        SpringApplication.run(CitizenApplication.class, args);
     }
 }

@@ -1,61 +1,57 @@
 package gr.university.citizen.client;
 
 import gr.university.citizen.domain.Citizen;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.GenericType;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * Simple Jersey client wrapper for the citizen REST API.
+ * Spring RestTemplate-based client for Citizen REST API.
  */
+@Component
 public class CitizenRestClient {
 
-    private final Client client;
-    private final WebTarget baseTarget;
+    private final RestTemplate restTemplate;
+    private final String baseUrl;
 
-    public CitizenRestClient(String baseUrl) {
-        this.client = ClientBuilder.newClient();
-        this.baseTarget = client.target(baseUrl).path("citizens");
+    public CitizenRestClient(
+            RestTemplate restTemplate,
+            @Value("${citizen.service.base-url}") String baseUrl
+    ) {
+        this.restTemplate = restTemplate;
+        this.baseUrl = baseUrl;
     }
 
     public List<Citizen> getAll() {
-        return baseTarget
-                .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<Citizen>>() {});
+        Citizen[] response =
+                restTemplate.getForObject(baseUrl + "/citizens", Citizen[].class);
+        return Arrays.asList(response);
     }
 
     public Citizen getById(Long id) {
-        return baseTarget
-                .path(String.valueOf(id))
-                .request(MediaType.APPLICATION_JSON)
-                .get(Citizen.class);
+        return restTemplate.getForObject(
+                baseUrl + "/citizens/" + id,
+                Citizen.class
+        );
     }
 
     public Citizen create(Citizen citizen) {
-        Response response = baseTarget
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(citizen, MediaType.APPLICATION_JSON));
-        return response.readEntity(Citizen.class);
+        return restTemplate.postForObject(
+                baseUrl + "/citizens",
+                citizen,
+                Citizen.class
+        );
     }
 
     public Citizen update(Long id, Citizen citizen) {
-        Response response = baseTarget
-                .path(String.valueOf(id))
-                .request(MediaType.APPLICATION_JSON)
-                .put(Entity.entity(citizen, MediaType.APPLICATION_JSON));
-        return response.readEntity(Citizen.class);
+        restTemplate.put(baseUrl + "/citizens/" + id, citizen);
+        return getById(id);
     }
 
     public void delete(Long id) {
-        baseTarget
-                .path(String.valueOf(id))
-                .request()
-                .delete();
+        restTemplate.delete(baseUrl + "/citizens/" + id);
     }
 }

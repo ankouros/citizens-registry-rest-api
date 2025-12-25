@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -15,22 +16,45 @@
 
     <name>Citizen Registry - Client</name>
 
+    <!-- ===================== -->
+    <!-- Dependencies          -->
+    <!-- ===================== -->
     <dependencies>
+
+        <!-- Shared domain classes -->
         <dependency>
             <groupId>gr.university</groupId>
             <artifactId>citizen-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
 
+        <!-- Spring Boot Core (CLI app) -->
         <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>${jersey.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
+
+        <!-- HTTP Client (RestTemplate / WebClient) -->
         <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-binding</artifactId>
-            <version>${jersey.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
     </dependencies>
+
+    <!-- ===================== -->
+    <!-- Build / Plugins       -->
+    <!-- ===================== -->
+    <build>
+        <plugins>
+
+            <!-- Spring Boot executable JAR -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>

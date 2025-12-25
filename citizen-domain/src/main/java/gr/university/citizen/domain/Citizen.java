@@ -1,16 +1,10 @@
 package gr.university.citizen.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 /**
- * Simple domain entity representing a citizen.
- * This is intentionally minimal; you should extend it according
- * to the functional requirements of the assignment.
+ * Domain entity representing a citizen.
  */
 @Entity
 @Table(name = "citizens")
@@ -20,22 +14,41 @@ public class Citizen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false, length = 9)
     private String afm;  // tax id
+
+    @Column(nullable = false, length = 11)
     private String amka; // social security id
+
+    @Column(nullable = false)
     private LocalDate birthDate;
+
+    /* ===== Constructors ===== */
 
     public Citizen() {
     }
 
-    public Citizen(String firstName, String lastName, String afm, String amka, LocalDate birthDate) {
+    public Citizen(
+            String firstName,
+            String lastName,
+            String afm,
+            String amka,
+            LocalDate birthDate
+    ) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.afm = afm;
         this.amka = amka;
         this.birthDate = birthDate;
     }
+
+    /* ===== Getters & Setters ===== */
 
     public Long getId() {
         return id;

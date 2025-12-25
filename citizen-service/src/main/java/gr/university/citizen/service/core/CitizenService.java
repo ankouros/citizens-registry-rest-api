@@ -1,6 +1,7 @@
 package gr.university.citizen.service.core;
 
 import gr.university.citizen.domain.Citizen;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Internal service responsible for the business logic of the citizen registry.
  * This class is a key target for JUnit unit tests in the second basic requirement.
  */
+@Service
 public class CitizenService {
 
     private final Map<Long, Citizen> citizens = new ConcurrentHashMap<>();
