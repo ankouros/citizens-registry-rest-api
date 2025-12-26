@@ -4,35 +4,63 @@ on:
   push:
     branches:
       - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
 
     steps:
+      # -------------------------
+      # Checkout
+      # -------------------------
       - name: Checkout source
         uses: actions/checkout@v4
 
+      # -------------------------
+      # Java setup
+      # -------------------------
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
+          cache: maven
 
+      # -------------------------
+      # Build & Unit Tests
+      # -------------------------
       - name: Build & run unit tests
         run: mvn clean test
 
-      # START REST API
+      # -------------------------
+      # Start REST Service
+      # -------------------------
       - name: Start Citizen Service
         run: |
-          # mvn -pl citizen-service spring-boot:run &
-          mvn clean verify -pl citizen-it -am
-          sleep 20
+          mvn -pl citizen-service spring-boot:run &
+          echo "Waiting for service to start..."
+          for i in {1..20}; do
+            if curl -s http://localhost:8080/actuator/health | grep -q UP; then
+              echo "Service is UP"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Service failed to start"
+          exit 1
 
-      # RUN INTEGRATION TESTS
+      # -------------------------
+      # Integration Tests
+      # -------------------------
       - name: Run integration tests
         run: mvn verify -pl citizen-it -am
 
+      # -------------------------
+      # Upload reports
+      # -------------------------
       - name: Upload unit test reports
         uses: actions/upload-artifact@v4
         with:
