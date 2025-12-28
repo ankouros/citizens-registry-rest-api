@@ -1,5 +1,0 @@
-GitHub Repository:
-https://github.com/ankouros/citizens-registry-rest-api
-
-CI/CD Pipeline (GitHub Actions):
-https://github.com/ankouros/citizens-registry-rest-api/actions
