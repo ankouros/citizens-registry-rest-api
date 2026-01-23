@@ -330,14 +330,23 @@ mvn clean verify
 Η ενότητα αφορά στη συσκευασία εφαρμογών σε containers (π.χ. Docker), στην περιγραφή του
 περιβάλλοντος εκτέλεσης και στη διασφάλιση αναπαραγωγιμότητας μεταξύ διαφορετικών συστημάτων.
 
-### 4.2 Μελλοντική επέκταση (placeholder)
+### 4.2 Υλοποίηση στο παρόν έργο
 
-Το παρόν README έχει σχεδιαστεί ώστε να είναι επεκτάσιμο. Σε επόμενη φάση εργασίας
-προβλέπεται:
+Η δοχειοποίηση υλοποιείται για το module `citizen-service` (REST API) και
+τεκμηριώνεται αναλυτικά στο `l3690/README.md`. Περιλαμβάνει:
 
-- προσθήκη Dockerfile(s) για τα επιμέρους modules (π.χ. `citizen-service`)
-- τεκμηρίωση του τρόπου δοχειοποίησης της εφαρμογής
-- ενσωμάτωση των βημάτων δοχειοποίησης στη γραμμή CI/CD
+- multi-stage `Dockerfile` με Maven build και JRE runtime
+- μη-ριζικό χρήστη για εκτέλεση της υπηρεσίας
+- scripts για build/start/stop (`l3690/build.sh`, `l3690/startup.sh`, `l3690/shutdown.sh`)
+- `docker-compose.yml` με υπηρεσίες REST API + MySQL, custom network και volume
+- βασικές πρακτικές ασφάλειας (read-only filesystem, `no-new-privileges`)
+
+Για εκτέλεση με Docker Compose:
+
+```bash
+cd l3690
+docker compose up -d
+```
 
 ---
 

@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: citizens
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    volumes:
+      - citizen-db-data:/var/lib/mysql
+    networks:
+      - citizen-net
+
+  citizen-service:
+    build:
+      context: ..
+      dockerfile: l3690/Dockerfile
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/citizens
+      SPRING_DATASOURCE_USERNAME: appuser
+      SPRING_DATASOURCE_PASSWORD: apppass
+    ports:
+      - "8080:8080"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - citizen-net
+
+volumes:
+  citizen-db-data:
+
+networks:
+  citizen-net:
+    driver: bridge
