@@ -23,8 +23,9 @@
 
 Όλα τα αρχεία της παρούσας άσκησης βρίσκονται στον φάκελο:
 
-<pre class="overflow-visible! px-0!" data-start="1548" data-end="1562"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>l3690/
-</span></span></code></div></div></pre>
+```
+docker/
+```
 
 ## 3. Dockerfile – Δοχειοποίηση RESTful Υπηρεσίας
 
@@ -40,8 +41,17 @@
 
 Το Dockerfile βρίσκεται στο:
 
-<pre class="overflow-visible! px-0!" data-start="2049" data-end="2073"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>l3690/Dockerfile
-</span></span></code></div></div></pre>
+```
+docker/Dockerfile
+```
+
+### Διόρθωση pom.xml για εκτελέσιμο JAR
+
+Κατά τη δοκιμή του Docker image εμφανίστηκε σφάλμα `no main manifest attribute`,
+που υποδεικνύει ότι το JAR δεν έχει επανασυσκευαστεί ως Spring Boot executable.
+Για τον λόγο αυτό προστέθηκε στο `citizen-service/pom.xml` ο στόχος
+`repackage` του `spring-boot-maven-plugin`, ώστε το τελικό JAR να είναι εκτελέσιμο
+και να εκκινεί σωστά στο container.
 
 ## 4. Scripts Διαχείρισης Docker
 
@@ -76,8 +86,9 @@
 
 Η διάταξη της εφαρμογής περιγράφεται μέσω του αρχείου:
 
-<pre class="overflow-visible! px-0!" data-start="2987" data-end="3019"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>l3690/docker-compose.yml
-</span></span></code></div></div></pre>
+```
+docker/docker-compose.yml
+```
 
 ### Περιλαμβάνει:
 
@@ -95,25 +106,29 @@
 
 Η διάταξη εκτελείται με:
 
-<pre class="overflow-visible! px-0!" data-start="3449" data-end="3481"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-bash"><span><span>docker compose up -d
-</span></span></code></div></div></pre>
+```bash
+docker compose up -d
+```
 
 και τερματίζεται με:
 
-<pre class="overflow-visible! px-0!" data-start="3504" data-end="3535"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-bash"><span><span>docker compose down
-</span></span></code></div></div></pre>
+```bash
+docker compose down
+```
 
 ## 6. Επίμονη Αποθήκευση Δεδομένων
 
 Για το ΣΔΒΔ χρησιμοποιείται Docker volume:
 
-<pre class="overflow-visible! px-0!" data-start="3622" data-end="3645"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>citizen-db-</span><span>data</span><span>
-</span></span></code></div></div></pre>
+```
+citizen-db-data
+```
 
 Το volume αντιστοιχίζεται στον φάκελο:
 
-<pre class="overflow-visible! px-0!" data-start="3686" data-end="3708"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>/var/lib/mysql
-</span></span></code></div></div></pre>
+```
+/var/lib/mysql
+```
 
 Με αυτόν τον τρόπο:
 

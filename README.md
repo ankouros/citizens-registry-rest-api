@@ -333,12 +333,12 @@ mvn clean verify
 ### 4.2 Υλοποίηση στο παρόν έργο
 
 Η δοχειοποίηση εφαρμόζεται αποκλειστικά στο module `citizen-service` (REST API),
-με πλήρη τεκμηρίωση στο `l3690/README.md`. Συνοπτικά περιλαμβάνει:
+με πλήρη τεκμηρίωση στο `docker/README.md`. Συνοπτικά περιλαμβάνει:
 
 - **Multi-stage Dockerfile** με Maven build και JRE runtime, με υποστήριξη multi-module build
   (συμπεριλαμβάνεται το `citizen-domain`).
 - **Εκτέλεση ως μη-ριζικός χρήστης** και μικρότερο τελικό image.
-- **Scripts διαχείρισης** (`l3690/build.sh`, `l3690/startup.sh`, `l3690/shutdown.sh`)
+- **Scripts διαχείρισης** (`docker/build.sh`, `docker/startup.sh`, `docker/shutdown.sh`)
   για build, εκκίνηση και τερματισμό των δοχείων.
 - **Docker Compose** με υπηρεσίες `citizen-service` και `db` (MySQL),
   custom network και **persistent volume** `citizen-db-data` στο `/var/lib/mysql`.
@@ -348,14 +348,14 @@ mvn clean verify
 Εκτέλεση με Docker Compose:
 
 ```bash
-cd l3690
+cd docker
 docker compose up -d
 ```
 
 Τερματισμός:
 
 ```bash
-cd l3690
+cd docker
 docker compose down
 ```
 

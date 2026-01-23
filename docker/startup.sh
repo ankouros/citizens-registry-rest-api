@@ -3,6 +3,9 @@ set -e
 
 NETWORK=citizen-net
 DB_VOLUME=citizen-db-data
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+cd "$SCRIPT_DIR"
 
 docker network create $NETWORK || true
 
