@@ -24,8 +24,10 @@ docker run -d \
   --network $NETWORK \
   -p 8080:8080 \
   -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/citizens \
+  -e SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver \
   -e SPRING_DATASOURCE_USERNAME=appuser \
   -e SPRING_DATASOURCE_PASSWORD=apppass \
+  -e SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect \
   citizen-service:latest
 
 echo "REST API available at http://localhost:8080"

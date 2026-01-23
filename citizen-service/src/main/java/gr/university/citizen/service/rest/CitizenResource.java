@@ -27,7 +27,7 @@ public class CitizenResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Citizen> getById(@PathVariable Long id) {
+    public ResponseEntity<Citizen> getById(@PathVariable("id") Long id) {
         try {
             Citizen citizen = citizenService.findById(id);
             return ResponseEntity.ok(citizen);
@@ -48,7 +48,7 @@ public class CitizenResource {
 
     @PutMapping("/{id}")
     public ResponseEntity<Citizen> update(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @RequestBody Citizen citizen
     ) {
         try {
@@ -64,7 +64,7 @@ public class CitizenResource {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         try {
             citizenService.delete(id);
             return ResponseEntity.noContent().build();
