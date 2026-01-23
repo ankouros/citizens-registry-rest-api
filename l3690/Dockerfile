@@ -8,6 +8,8 @@ WORKDIR /build
 COPY pom.xml .
 COPY citizen-domain/pom.xml citizen-domain/pom.xml
 COPY citizen-service/pom.xml citizen-service/pom.xml
+COPY citizen-client/pom.xml citizen-client/pom.xml
+COPY citizen-it/pom.xml citizen-it/pom.xml
 
 # download deps
 RUN mvn -B -pl citizen-service -am dependency:go-offline
