@@ -67,8 +67,7 @@ citizens-registry-rest-api/
 - Χρήση **Jakarta Persistence (JPA)**
 - **Unit tests οντοτήτων** (constructors, getters/setters)
 
- Καλύπτει τις απαιτήσεις δοκιμών μονάδων οντοτήτων σύμφωνα με την εκφώνηση
-**(12/12 μονάδες)**
+ Καλύπτει τις απαιτήσεις δοκιμών μονάδων οντοτήτων σύμφωνα με την εκφώνηση.
 ----------------------
 
 ### 2️⃣ citizen-service
@@ -96,9 +95,9 @@ citizens-registry-rest-api/
 
  Καλύπτει:
 
-- 6/6 → Δοκιμές ρύθμισης
-- 12/12 → Δοκιμές ORM
-- 12/12 → Unit tests λογικής
+- Δοκιμές ρύθμισης
+- Δοκιμές ORM
+- Unit tests λογικής
 
 ---
 
@@ -129,7 +128,6 @@ citizens-registry-rest-api/
 - Δοκιμή όλων των REST endpoints
 
  Δοκιμάζονται **και οι 5 REST μέθοδοι**
-→ **20/20 μονάδες Integration Tests**
 
 ---
 
