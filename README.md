@@ -1,5 +1,7 @@
 # Citizen Registry REST API
 
+[![CI - Citizens Registry](https://github.com/ankouros/citizens-registry-rest-api/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/ankouros/citizens-registry-rest-api/actions/workflows/ci.yml)
+
 ### Spring Boot • JPA • Testing • CI/CD
 
 ---
