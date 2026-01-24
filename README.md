@@ -274,11 +274,11 @@ mvn clean verify
 
 | Κατηγορία Δοκιμών              | Module     | Κάλυψη |
 | ----------------------------------------------------------- | --------------- | ------------ |
-| Unit tests οντοτήτων (Entities)          | citizen-domain |      |
-| Δοκιμές ρύθμισης (Spring Context)      | citizen-service |      |
-| Δοκιμές ORM / Repository               | citizen-service |      |
-| Δοκιμές επιχειρησιακής λογικής | citizen-service |      |
-| Δοκιμές ενοποίησης REST API (Rest-Assured) | citizen-it   |      |
+| Unit tests οντοτήτων (Entities)          | citizen-domain | 100% |
+| Δοκιμές ρύθμισης (Spring Context)      | citizen-service | 100% |
+| Δοκιμές ORM / Repository               | citizen-service | 100% |
+| Δοκιμές επιχειρησιακής λογικής | citizen-service | 100% |
+| Δοκιμές ενοποίησης REST API (Rest-Assured) | citizen-it   | 100% |
 
 Με βάση τα παραπάνω, η κάλυψη δοκιμών ικανοποιεί πλήρως τα κριτήρια αξιολόγησης
 των αντίστοιχων ενοτήτων.
@@ -293,15 +293,15 @@ mvn clean verify
 
 | Απαίτηση            | Κάλυψη |
 | -------------------------------------- | ------------ |
-| RESTful λειτουργικότητα |      |
-| Persistence / ORM           |      |
-| Maven οργάνωση         |      |
-| Client εφαρμογή        |      |
-| Unit tests οντοτήτων     |      |
-| Configuration tests          |      |
-| ORM tests               |      |
-| Integration tests           |      |
-| CI/CD                 |      |
+| RESTful λειτουργικότητα | 100% |
+| Persistence / ORM           | 100% |
+| Maven οργάνωση         | 100% |
+| Client εφαρμογή        | 100% |
+| Unit tests οντοτήτων     | 100% |
+| Configuration tests          | 100% |
+| ORM tests               | 100% |
+| Integration tests           | 100% |
+| CI/CD                 | 100% |
 
 ---
 
