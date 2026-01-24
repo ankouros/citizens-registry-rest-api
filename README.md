@@ -4,7 +4,7 @@
 
 ---
 
-## 1. l3687-Μηχανική Μοντέρνων Εφαρμογών Παγκοσμίου Ιστού [elearn88]
+## 1. l3687-Μηχανική Μοντέρνων Εφαρμογών Παγκοσμίου Ιστού 
 
 ### 1.1 Στόχοι ενότητας
 
@@ -43,11 +43,11 @@
 
 ```text
 citizens-registry-rest-api/
-├── citizen-domain     # Domain / Entity classes (JPA)
-├── citizen-service    # Spring Boot RESTful Service
-├── citizen-client     # Spring Boot CLI Client (προαιρετικό)
-├── citizen-it         # Integration Tests (Rest-Assured)
-└── pom.xml            # Parent POM
+├── citizen-domain   # Domain / Entity classes (JPA)
+├── citizen-service  # Spring Boot RESTful Service
+├── citizen-client   # Spring Boot CLI Client (προαιρετικό)
+├── citizen-it     # Integration Tests (Rest-Assured)
+└── pom.xml      # Parent POM
 ```
 
 ### 1.4 Υπο-Έργα & Ρόλος
@@ -58,12 +58,12 @@ citizens-registry-rest-api/
 
 - Οντότητα `Citizen`
 - Πεδία:
-  - id
-  - firstName
-  - lastName
-  - afm
-  - amka
-  - birthDate
+ - id
+ - firstName
+ - lastName
+ - afm
+ - amka
+ - birthDate
 - Χρήση **Jakarta Persistence (JPA)**
 - **Unit tests οντοτήτων** (constructors, getters/setters)
 
@@ -76,19 +76,19 @@ citizens-registry-rest-api/
 **Ρόλος:** RESTful υπηρεσία (Spring Boot)
 
 - CRUD λειτουργίες:
-  - `GET /citizens`
-  - `GET /citizens/{id}`
-  - `POST /citizens`
-  - `PUT /citizens/{id}`
-  - `DELETE /citizens/{id}`
+ - `GET /citizens`
+ - `GET /citizens/{id}`
+ - `POST /citizens`
+ - `PUT /citizens/{id}`
+ - `DELETE /citizens/{id}`
 - Spring Data JPA Repository
 - In-memory βάση δεδομένων **H2**
 - Καθαρός διαχωρισμός:
-  - Controller (REST layer)
-  - Service (business logic)
-  - Repository (persistence)
+ - Controller (REST layer)
+ - Service (business logic)
+ - Repository (persistence)
 
-####  Δοκιμές στο citizen-service
+#### Δοκιμές στο citizen-service
 
 - **Configuration Tests** (Spring Context & Beans)
 - **ORM Tests** (save / find / delete μέσω JPA)
@@ -108,12 +108,12 @@ citizens-registry-rest-api/
 
 - Spring Boot εφαρμογή γραμμής εντολών
 - Διαδραστικό menu:
-  - Λίστα πολιτών
-  - Δημιουργία πολίτη
-  - Έξοδος
+ - Λίστα πολιτών
+ - Δημιουργία πολίτη
+ - Έξοδος
 - Επαναχρησιμοποίηση domain classes
 - Δεν εκκινεί web server
-  (`spring.main.web-application-type=none`)
+ (`spring.main.web-application-type=none`)
 
  Καλύπτει το **1ο προαιρετικό ζητούμενο**, σύμφωνα με τις προβλεπόμενες απαιτήσεις
 
@@ -193,7 +193,7 @@ mvn clean verify
 
 ---
 
-## 2. l3688-Συνεχής Ενοποίηση και Παράδοση (CI/CD) [elearn88]
+## 2. l3688-Συνεχής Ενοποίηση και Παράδοση (CI/CD) 
 
 ### 2.1 Στόχοι ενότητας
 
@@ -215,8 +215,8 @@ mvn clean verify
 - εκκινεί την εφαρμογή `citizen-service` και ελέγχει το `/actuator/health` μέχρι να είναι `UP`
 - εκτελεί integration tests με `mvn verify -pl citizen-it -am` (Rest-Assured + Failsafe)
 - ανεβάζει ως **artifacts**:
-  - unit test reports: `**/target/surefire-reports/*.xml`
-  - integration test reports: `**/target/failsafe-reports/*.xml`
+ - unit test reports: `**/target/surefire-reports/*.xml`
+ - integration test reports: `**/target/failsafe-reports/*.xml`
 
 Ο αγωγός επομένως καλύπτει τόσο τη συνεχή ενοποίηση του κώδικα (CI) όσο και τη συνεχή επιβεβαίωση
 της ορθότητας μέσω αυτοματοποιημένων δοκιμών. Η διαδικασία CI/CD είναι αναπαραγώγιμη σε οποιοδήποτε περιβάλλον διαθέτει GitHub Actions runner με JDK 17, διασφαλίζοντας συνεπή και επαναλήψιμα αποτελέσματα εκτέλεσης..
@@ -226,7 +226,7 @@ mvn clean verify
 Για την ενότητα l3688 παραδίδονται:
 
 - πλήρως λειτουργικό **GitHub Actions workflow** (`CI - Citizens Registry`)
-  που ικανοποιεί τις προβλεπόμενες απαιτήσεις της ενότητας
+ που ικανοποιεί τις προβλεπόμενες απαιτήσεις της ενότητας
 - αυτοματοποιημένη εκτέλεση build, unit tests και integration tests
 - συλλογή και αποθήκευση των **test reports** ως artifacts
 
@@ -238,7 +238,7 @@ mvn clean verify
 
 ---
 
-##  Στρατηγική και Κάλυψη Δοκιμών
+## Στρατηγική και Κάλυψη Δοκιμών
 
 Η στρατηγική δοκιμών του έργου ακολουθεί πολυεπίπεδη προσέγγιση, ώστε να
 διασφαλίζεται η ορθότητα της εφαρμογής από το επίπεδο των οντοτήτων
@@ -248,18 +248,18 @@ mvn clean verify
 
 ---
 
-##  Κάλυψη Δοκιμών (Test Coverage Matrix)
+## Κάλυψη Δοκιμών (Test Coverage Matrix)
 
 Ο ακόλουθος πίνακας συνοψίζει, σε μορφή matrix, τη σχέση ανάμεσα στα υπο-έργα, τα είδη δοκιμών,
 τις κλάσεις / endpoints που ελέγχονται και την αντίστοιχη ενότητα μαθήματος.
 
-| Υπο-έργο (Module) | Τύπος δοκιμής            | Κλάσεις ή Endpoints                                           | Τι ελέγχεται                                                                                                                                                                                         | Ενότητα μαθήματος                               |
+| Υπο-έργο (Module) | Τύπος δοκιμής      | Κλάσεις ή Endpoints                      | Τι ελέγχεται                                                                                             | Ενότητα μαθήματος                |
 | ------------------------ | ------------------------------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| citizen-domain           | Unit (Entities)                      | `Citizen`                                                           | Ορθότητα domain μοντέλου, constructors/getters/setters και βασική εγκυρότητα πεδίων                                                                                    | l3687 – Μηχανική Μοντέρνων Εφαρμογών |
-| citizen-service          | Unit (Configuration)                 | `ConfigurationTest` / Spring Beans                                  | Φόρτωση Spring context, διαθεσιμότητα βασικών beans και χειρισμός βασικών σφαλμάτων ρύθμισης                                                     | l3687, l3688                                                    |
-| citizen-service          | Unit (ORM / Repository)              | `CitizenRepository`                                                 | Λειτουργία JPA/H2: save/find/delete και βασικοί περιορισμοί συνέπειας δεδομένων                                                                                | l3687 – Persistence / ORM                                      |
-| citizen-service          | Unit (Business Logic)                | `CitizenService`                                                    | CRUD λογική, έλεγχος εγκυρότητας εισόδων, βασικές επιχειρησιακές εξαιρέσεις και αναμενόμενες οριακές περιπτώσεις | l3687 – RESTful υπηρεσία & business layer              |
-| citizen-it               | Integration (REST API, Rest-Assured) | `CitizenApiIT` / REST endpoints (`/citizens`, `/citizens/{id}`) | End-to-end ροή αιτημάτων/απαντήσεων και χειρισμός τυπικών σφαλμάτων HTTP σε πραγματικό server                                                     | l3687, l3688                                                    |
+| citizen-domain      | Unit (Entities)           | `Citizen`                              | Ορθότητα domain μοντέλου, constructors/getters/setters και βασική εγκυρότητα πεδίων                                          | l3687 – Μηχανική Μοντέρνων Εφαρμογών |
+| citizen-service     | Unit (Configuration)         | `ConfigurationTest` / Spring Beans                 | Φόρτωση Spring context, διαθεσιμότητα βασικών beans και χειρισμός βασικών σφαλμάτων ρύθμισης                           | l3687, l3688                          |
+| citizen-service     | Unit (ORM / Repository)       | `CitizenRepository`                         | Λειτουργία JPA/H2: save/find/delete και βασικοί περιορισμοί συνέπειας δεδομένων                                        | l3687 – Persistence / ORM                   |
+| citizen-service     | Unit (Business Logic)        | `CitizenService`                          | CRUD λογική, έλεγχος εγκυρότητας εισόδων, βασικές επιχειρησιακές εξαιρέσεις και αναμενόμενες οριακές περιπτώσεις | l3687 – RESTful υπηρεσία & business layer       |
+| citizen-it        | Integration (REST API, Rest-Assured) | `CitizenApiIT` / REST endpoints (`/citizens`, `/citizens/{id}`) | End-to-end ροή αιτημάτων/απαντήσεων και χειρισμός τυπικών σφαλμάτων HTTP σε πραγματικό server                           | l3687, l3688                          |
 
 Ο πίνακας αποδεικνύει ότι η κάλυψη δοκιμών είναι:
 
@@ -269,45 +269,45 @@ mvn clean verify
 
 ---
 
-###  Αντιστοίχιση Δοκιμών με Κριτήρια Αξιολόγησης
+### Αντιστοίχιση Δοκιμών με Κριτήρια Αξιολόγησης
 
 Ο παρακάτω πίνακας αποτυπώνει ρητά τη σύνδεση των υλοποιημένων δοκιμών
 με τα κριτήρια βαθμολόγησης της εκφώνησης:
 
-| Κατηγορία Δοκιμών                           | Module          | Κάλυψη |
+| Κατηγορία Δοκιμών              | Module     | Κάλυψη |
 | ----------------------------------------------------------- | --------------- | ------------ |
-| Unit tests οντοτήτων (Entities)                    | citizen-domain  |            |
-| Δοκιμές ρύθμισης (Spring Context)            | citizen-service |            |
-| Δοκιμές ORM / Repository                             | citizen-service |            |
-| Δοκιμές επιχειρησιακής λογικής  | citizen-service |            |
-| Δοκιμές ενοποίησης REST API (Rest-Assured) | citizen-it      |            |
+| Unit tests οντοτήτων (Entities)          | citizen-domain |      |
+| Δοκιμές ρύθμισης (Spring Context)      | citizen-service |      |
+| Δοκιμές ORM / Repository               | citizen-service |      |
+| Δοκιμές επιχειρησιακής λογικής | citizen-service |      |
+| Δοκιμές ενοποίησης REST API (Rest-Assured) | citizen-it   |      |
 
 Με βάση τα παραπάνω, η κάλυψη δοκιμών ικανοποιεί πλήρως τα κριτήρια αξιολόγησης
 των αντίστοιχων ενοτήτων.
 
 ---
 
-##  Κάλυψη Αξιολόγησης
+## Κάλυψη Αξιολόγησης
 
 ---
 
 Ο παρακάτω πίνακας συνοψίζει την κάλυψη των απαιτήσεων του μαθήματος:
 
-| Απαίτηση                       | Κάλυψη |
+| Απαίτηση            | Κάλυψη |
 | -------------------------------------- | ------------ |
-| RESTful λειτουργικότητα |            |
-| Persistence / ORM                      |            |
-| Maven οργάνωση                 |            |
-| Client εφαρμογή                |            |
-| Unit tests οντοτήτων          |            |
-| Configuration tests                    |            |
-| ORM tests                              |            |
-| Integration tests                      |            |
-| CI/CD                                  |            |
+| RESTful λειτουργικότητα |      |
+| Persistence / ORM           |      |
+| Maven οργάνωση         |      |
+| Client εφαρμογή        |      |
+| Unit tests οντοτήτων     |      |
+| Configuration tests          |      |
+| ORM tests               |      |
+| Integration tests           |      |
+| CI/CD                 |      |
 
 ---
 
-## 3. l3689-Υπολογιστικό Νέφος και Διαχείριση Πόρων Κατά Μήκος Νεφών [elearn88]
+## 3. l3689-Υπολογιστικό Νέφος και Διαχείριση Πόρων Κατά Μήκος Νεφών 
 
 ### 3.1 Στόχοι ενότητας
 
@@ -336,7 +336,7 @@ systemd service, runtime pipeline) **δεν απαιτείται από την �
 
 ---
 
-## 4. l3690-Δοχειοποίηση Εφαρμογών (Application Containerisation) [elearn88]
+## 4. l3690-Δοχειοποίηση Εφαρμογών (Application Containerisation) 
 
 ### 4.1 Στόχοι ενότητας
 
@@ -349,14 +349,14 @@ systemd service, runtime pipeline) **δεν απαιτείται από την �
 με πλήρη τεκμηρίωση στο `docker/README.md`. Συνοπτικά περιλαμβάνει:
 
 - **Multi-stage Dockerfile** με Maven build και JRE runtime, με υποστήριξη multi-module build
-  (συμπεριλαμβάνεται το `citizen-domain`).
+ (συμπεριλαμβάνεται το `citizen-domain`).
 - **Εκτέλεση ως μη-ριζικός χρήστης** και μικρότερο τελικό image.
 - **Scripts διαχείρισης** (`docker/build.sh`, `docker/startup.sh`, `docker/shutdown.sh`)
-  για build, εκκίνηση και τερματισμό των δοχείων.
+ για build, εκκίνηση και τερματισμό των δοχείων.
 - **Docker Compose** με υπηρεσίες `citizen-service` και `db` (MySQL),
-  custom network και **persistent volume** `citizen-db-data` στο `/var/lib/mysql`.
+ custom network και **persistent volume** `citizen-db-data` στο `/var/lib/mysql`.
 - **Βασικές πρακτικές ασφάλειας**: read-only filesystem, `no-new-privileges`,
-  και μη έκθεση θυρών της βάσης στο τοπικό σύστημα.
+ και μη έκθεση θυρών της βάσης στο τοπικό σύστημα.
 
 Εκτέλεση με Docker Compose:
 
@@ -374,7 +374,7 @@ docker compose down
 
 ---
 
-## 5. l3691-Ενορχήστρωση Δοχείων Εφαρμογών κατά Μήκος Πόρων [elearn88]
+## 5. l3691-Ενορχήστρωση Δοχείων Εφαρμογών κατά Μήκος Πόρων 
 
 ### 5.1 Στόχοι ενότητας
 
