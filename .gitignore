@@ -5,3 +5,12 @@
 *.iml
 requirements
 l3688
+l3690
+l3689
+
+# Terraform local state and caches
+**/.terraform/
+**/.terraform.lock.hcl
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfvars
