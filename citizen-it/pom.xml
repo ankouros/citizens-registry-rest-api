@@ -26,7 +26,6 @@
             <groupId>gr.university</groupId>
             <artifactId>citizen-service</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- Spring Boot test infrastructure -->
