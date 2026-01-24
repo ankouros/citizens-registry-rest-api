@@ -29,7 +29,7 @@ FROM eclipse-temurin:21-jre-jammy
 RUN useradd -m -u 10001 appuser
 WORKDIR /app
 
-COPY --from=build /build/citizen-service/target/*jar app.jar
+COPY --from=build /build/citizen-service/target/*exec.jar app.jar
 
 EXPOSE 8080
 USER appuser
