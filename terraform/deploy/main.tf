@@ -8,15 +8,15 @@ terraform {
 }
 
 provider "aws" {
-  # Η περιοχή ανάπτυξης καθορίζεται από μεταβλητή για συνέπεια με τις φάσεις prepare/deploy/destroy.
+  # Region is configured via variable for consistency across prepare/deploy/destroy.
   region = var.aws_region
 }
 
 # --------------------
-# ΣΤΙΓΜΙΟΤΥΠΟ ΒΑΣΗΣ ΔΕΔΟΜΕΝΩΝ
+# DATABASE INSTANCE
 # --------------------
 resource "aws_instance" "db" {
-  # Το AMI βάσης DB διατηρεί την ευθύνη του λειτουργικού περιβάλλοντος, όχι της εφαρμογής.
+  # DB base AMI keeps OS/runtime responsibilities separate from the app.
   ami                    = var.db_ami
   instance_type          = "t2.micro"
   key_name               = var.key_name
@@ -29,10 +29,10 @@ resource "aws_instance" "db" {
 }
 
 # --------------------
-# ΣΤΙΓΜΙΟΤΥΠΑ REST ΥΠΗΡΕΣΙΑΣ
+# REST SERVICE INSTANCES
 # --------------------
 resource "aws_instance" "rest" {
-  # Πολλαπλά στιγμιότυπα για οριζόντια κλιμάκωση μέσω εξισορροπητή φορτίου.
+  # Multiple instances for horizontal scaling behind the load balancer.
   count                  = 3
   ami                    = var.rest_ami
   instance_type          = "t2.micro"
@@ -46,10 +46,10 @@ resource "aws_instance" "rest" {
 }
 
 # --------------------
-# ΕΞΙΣΟΡΡΟΠΗΤΗΣ ΦΟΡΤΙΟΥ (ALB)
+# LOAD BALANCER (ALB)
 # --------------------
 resource "aws_lb" "rest_lb" {
-  # Δημόσιος ALB για έκθεση του REST τελικού σημείου χωρίς άμεση πρόσβαση στα στιγμιότυπα.
+  # Public ALB exposes the REST endpoint without direct instance access.
   name               = "rest-lb"
   internal           = false
   load_balancer_type = "application"
@@ -61,7 +61,7 @@ resource "aws_lb" "rest_lb" {
 }
 
 resource "aws_lb_target_group" "rest_tg" {
-  # Ομάδα στόχων που αντιστοιχεί στη θύρα εφαρμογής των REST στιγμιοτύπων.
+  # Target group for the REST application port.
   name     = "rest-tg"
   port     = 8080
   protocol = "HTTP"
@@ -69,7 +69,7 @@ resource "aws_lb_target_group" "rest_tg" {
 }
 
 resource "aws_lb_target_group_attachment" "rest_attach" {
-  # Σύνδεση όλων των REST στιγμιοτύπων στην ομάδα στόχων.
+  # Attach all REST instances to the target group.
   count            = 3
   target_group_arn = aws_lb_target_group.rest_tg.arn
   target_id        = aws_instance.rest[count.index].id
@@ -77,7 +77,7 @@ resource "aws_lb_target_group_attachment" "rest_attach" {
 }
 
 resource "aws_lb_listener" "http" {
-  # Ακροατής HTTP στη θύρα 80 που προωθεί προς την ομάδα στόχων.
+  # HTTP listener on port 80 that forwards to the target group.
   load_balancer_arn = aws_lb.rest_lb.arn
   port              = 80
   protocol          = "HTTP"

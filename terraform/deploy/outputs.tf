@@ -1,17 +1,17 @@
-# Δημόσιο σημείο πρόσβασης της εφαρμογής μέσω ALB.
+# Public application entrypoint via the ALB.
 output "load_balancer_dns" {
-  description = "Δημόσιο DNS του load balancer για τη REST υπηρεσία"
+  description = "Public DNS of the load balancer for the REST service"
   value       = aws_lb.rest_lb.dns_name
 }
 
-# Ιδιωτικές IPs των REST στιγμιοτύπων (ενημερωτικός χαρακτήρας).
+# Private IPs of the REST instances (informational).
 output "rest_private_ips" {
-  description = "Ιδιωτικές διευθύνσεις IP των REST instances"
+  description = "Private IP addresses of the REST instances"
   value       = aws_instance.rest[*].private_ip
 }
 
-# Ιδιωτική IP του στιγμιοτύπου της βάσης.
+# Private IP of the database instance.
 output "db_private_ip" {
-  description = "Ιδιωτική διεύθυνση IP του DB instance"
+  description = "Private IP address of the DB instance"
   value       = aws_instance.db.private_ip
 }

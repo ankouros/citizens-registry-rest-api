@@ -1,8 +1,8 @@
 # --------------------
-# VPC (Εικονικό Ιδιωτικό Δίκτυο)
+# VPC (VIRTUAL PRIVATE CLOUD)
 # --------------------
 resource "aws_vpc" "main" {
-  # Ενιαίο VPC για σαφή οριοθέτηση του εργαστηριακού περιβάλλοντος.
+  # Single VPC to clearly scope the lab environment.
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -13,10 +13,10 @@ resource "aws_vpc" "main" {
 }
 
 # --------------------
-# ΠΥΛΗ ΠΡΟΣ ΤΟ ΔΙΑΔΙΚΤΥΟ (Internet Gateway)
+# INTERNET GATEWAY
 # --------------------
 resource "aws_internet_gateway" "igw" {
-  # Απαραίτητο για δημόσια πρόσβαση στον εξισορροπητή φορτίου.
+  # Required for public access to the load balancer.
   vpc_id = aws_vpc.main.id
 
   tags = {
@@ -25,10 +25,10 @@ resource "aws_internet_gateway" "igw" {
 }
 
 # --------------------
-# ΔΗΜΟΣΙΟ ΥΠΟΔΙΚΤΥΟ (Εξισορροπητής Φορτίου)
+# PUBLIC SUBNET (LOAD BALANCER)
 # --------------------
 resource "aws_subnet" "public" {
-  # Δημόσιο υποδίκτυο για τον ALB ώστε να δέχεται εισερχόμενη κίνηση.
+  # Public subnet for the ALB to receive inbound traffic.
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
@@ -40,10 +40,10 @@ resource "aws_subnet" "public" {
 }
 
 # --------------------
-# ΙΔΙΩΤΙΚΟ ΥΠΟΔΙΚΤΥΟ (REST + DB)
+# PRIVATE SUBNET (REST + DB)
 # --------------------
 resource "aws_subnet" "private" {
-  # Ιδιωτικό υποδίκτυο για REST και DB ώστε να μην εκτίθενται δημόσια.
+  # Private subnet for REST and DB to avoid public exposure.
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "${var.aws_region}a"
@@ -54,10 +54,10 @@ resource "aws_subnet" "private" {
 }
 
 # --------------------
-# ΠΙΝΑΚΑΣ ΔΗΜΟΣΙΩΝ ΔΡΟΜΟΛΟΓΗΣΕΩΝ
+# PUBLIC ROUTE TABLE
 # --------------------
 resource "aws_route_table" "public_rt" {
-  # Πίνακας δρομολόγησης που επιτρέπει έξοδο στο διαδίκτυο μέσω IGW.
+  # Route table that allows Internet access via the IGW.
   vpc_id = aws_vpc.main.id
 
   route {
@@ -71,16 +71,16 @@ resource "aws_route_table" "public_rt" {
 }
 
 resource "aws_route_table_association" "public_assoc" {
-  # Σύνδεση του δημόσιου υποδικτύου με τον δημόσιο πίνακα δρομολόγησης.
+  # Associate the public subnet with the public route table.
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public_rt.id
 }
 
 # --------------------
-# ΠΙΝΑΚΑΣ ΙΔΙΩΤΙΚΩΝ ΔΡΟΜΟΛΟΓΗΣΕΩΝ
+# PRIVATE ROUTE TABLE
 # --------------------
 resource "aws_route_table" "private_rt" {
-  # Ιδιωτική δρομολόγηση χωρίς 0.0.0.0/0, ώστε να αποφεύγεται άμεση έκθεση.
+  # Private routing without 0.0.0.0/0 to avoid direct exposure.
   vpc_id = aws_vpc.main.id
 
   tags = {
@@ -89,16 +89,16 @@ resource "aws_route_table" "private_rt" {
 }
 
 resource "aws_route_table_association" "private_assoc" {
-  # Σύνδεση του ιδιωτικού υποδικτύου με τον ιδιωτικό πίνακα δρομολόγησης.
+  # Associate the private subnet with the private route table.
   subnet_id      = aws_subnet.private.id
   route_table_id = aws_route_table.private_rt.id
 }
 
 # --------------------
-# ΔΕΥΤΕΡΟ ΔΗΜΟΣΙΟ ΥΠΟΔΙΚΤΥΟ (απαίτηση ALB)
+# SECOND PUBLIC SUBNET (ALB REQUIREMENT)
 # --------------------
 resource "aws_subnet" "public_b" {
-  # Δεύτερο δημόσιο υποδίκτυο σε άλλη ζώνη διαθεσιμότητας (AZ), απαίτηση του ALB.
+  # Second public subnet in another AZ, required by the ALB.
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.3.0/24"
   map_public_ip_on_launch = true
@@ -110,7 +110,7 @@ resource "aws_subnet" "public_b" {
 }
 
 resource "aws_route_table_association" "public_assoc_b" {
-  # Σύνδεση του δεύτερου δημόσιου υποδικτύου στον ίδιο δημόσιο πίνακα δρομολόγησης.
+  # Associate the second public subnet with the same public route table.
   subnet_id      = aws_subnet.public_b.id
   route_table_id = aws_route_table.public_rt.id
 }

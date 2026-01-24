@@ -1,12 +1,12 @@
 # --------------------
-# ΟΜΑΔΑ ΑΣΦΑΛΕΙΑΣ: ΕΞΙΣΟΡΡΟΠΗΤΗΣ ΦΟΡΤΙΟΥ
+# SECURITY GROUP: LOAD BALANCER
 # --------------------
 resource "aws_security_group" "lb_sg" {
   name        = "lb-sg"
-  description = "Security group για τον load balancer"
+  description = "Security group for load balancer"
   vpc_id      = aws_vpc.main.id
 
-  # Επιτρέπεται HTTP από το διαδίκτυο αποκλειστικά προς τον ALB.
+  # Allow HTTP from the Internet to the ALB only.
   ingress {
     description = "HTTP from Internet"
     from_port   = 80
@@ -15,7 +15,7 @@ resource "aws_security_group" "lb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Επιτρέπεται εξερχόμενη κίνηση ώστε ο ALB να επικοινωνεί με τα στιγμιότυπα-στόχους.
+  # Allow outbound traffic so the ALB can reach target instances.
   egress {
     from_port   = 0
     to_port     = 0
@@ -29,14 +29,14 @@ resource "aws_security_group" "lb_sg" {
 }
 
 # --------------------
-# ΟΜΑΔΑ ΑΣΦΑΛΕΙΑΣ: REST ΕΦΑΡΜΟΓΗ
+# SECURITY GROUP: REST SERVICE
 # --------------------
 resource "aws_security_group" "rest_sg" {
   name        = "rest-sg"
-  description = "Security group για τα REST service instances"
+  description = "Security group for REST service instances"
   vpc_id      = aws_vpc.main.id
 
-  # Επιτρέπεται εισερχόμενη κίνηση μόνο από τον ALB στη θύρα εφαρμογής.
+  # Allow inbound traffic only from the ALB on the app port.
   ingress {
     description     = "HTTP from Load Balancer"
     from_port       = 8080
@@ -45,7 +45,7 @@ resource "aws_security_group" "rest_sg" {
     security_groups = [aws_security_group.lb_sg.id]
   }
 
-  # Επιτρέπεται εξερχόμενη κίνηση για επικοινωνία με τη βάση και βασικές υπηρεσίες συστήματος.
+  # Allow outbound traffic for DB access and system services.
   egress {
     from_port   = 0
     to_port     = 0
@@ -59,14 +59,14 @@ resource "aws_security_group" "rest_sg" {
 }
 
 # --------------------
-# ΟΜΑΔΑ ΑΣΦΑΛΕΙΑΣ: ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ
+# SECURITY GROUP: DATABASE
 # --------------------
 resource "aws_security_group" "db_sg" {
   name        = "db-sg"
-  description = "Security group για το instance της βάσης δεδομένων"
+  description = "Security group for database instance"
   vpc_id      = aws_vpc.main.id
 
-  # Επιτρέπεται πρόσβαση στη βάση μόνο από τα REST στιγμιότυπα.
+  # Allow DB access only from REST instances.
   ingress {
     description     = "DB access from REST service"
     from_port       = var.db_port
@@ -75,7 +75,7 @@ resource "aws_security_group" "db_sg" {
     security_groups = [aws_security_group.rest_sg.id]
   }
 
-  # Επιτρέπεται εξερχόμενη κίνηση για βασικές ενημερώσεις συστήματος.
+  # Allow outbound traffic for basic system updates.
   egress {
     from_port   = 0
     to_port     = 0

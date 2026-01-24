@@ -9,7 +9,6 @@
 - όλα τα βήματα που απαιτούνται από ένα «καθαρό» σύστημα,
 - τη διάκριση των φάσεων **prepare / deploy / destroy**,
 - τις μεταβλητές που χρησιμοποιούνται,
-- πού και γιατί αποθηκεύονται,
 - καθώς και τον σωστό τρόπο ολοκλήρωσης και καθαρισμού της υποδομής.
 
 ## Αρχιτεκτονικό Πεδίο και Ρητός Περιορισμός
@@ -86,7 +85,7 @@ aws configure
 
 - AWS Access Key ID
 - AWS Secret Access Key
-- Region: `eu-central-1`
+- Region: `<AWS_REGION>`
 - Output format: `json`
 
 Έλεγχος:
@@ -101,16 +100,16 @@ aws sts get-caller-identity
 
 ```bash
 aws ec2 create-key-pair \
-  --key-name terraform-key \
+  --key-name <EC2_KEY_PAIR_NAME> \
   --query 'KeyMaterial' \
-  --output text > terraform-key.pem
+  --output text > <EC2_KEY_PAIR_NAME>.pem
 
-chmod 400 terraform-key.pem
+chmod 400 <EC2_KEY_PAIR_NAME>.pem
 ```
 
 Σημείωση:
 
-- Το όνομα `terraform-key` αποθηκεύεται στο AWS.
+- Το όνομα `<EC2_KEY_PAIR_NAME>` αποθηκεύεται στο AWS.
 - Το αρχείο `.pem` παραμένει τοπικά και δεν χρησιμοποιείται από το Terraform.
 
 ## Δομή Terraform Έργου
@@ -138,11 +137,11 @@ terraform/
 terraform/prepare/variables.tf
 ```
 
-| Μεταβλητή | Ρόλος |
-| --- | --- |
-| aws_region | Περιοχή AWS |
-| base_ami | Ubuntu AMI βάσης |
-| key_name | Όνομα EC2 Key Pair |
+| Μεταβλητή | Ρόλος              |
+| ------------------ | ----------------------- |
+| aws_region         | Περιοχή AWS      |
+| base_ami           | Ubuntu AMI βάσης   |
+| key_name           | Όνομα EC2 Key Pair |
 
 ### Αποθήκευση τιμών
 
@@ -153,9 +152,11 @@ terraform/prepare/terraform.tfvars
 Παράδειγμα:
 
 ```hcl
-base_ami = "ami-01f79b1e4a5c64257"
-key_name = "terraform-key"
+base_ami = "<UBUNTU_BASE_AMI_ID>"
+key_name = "<EC2_KEY_PAIR_NAME>"
 ```
+
+Οι τιμές στο παράδειγμα είναι placeholders και αντικαθίστανται από πραγματικές τιμές πριν την εκτέλεση.
 
 ### Εκτέλεση
 
@@ -190,13 +191,13 @@ terraform apply
 terraform/deploy/variables.tf
 ```
 
-| Μεταβλητή | Ρόλος |
-| --- | --- |
-| aws_region | Περιοχή AWS |
-| rest_ami | AMI από prepare |
-| db_ami | Ubuntu AMI για DB |
-| key_name | EC2 Key Pair |
-| db_port | Θύρα DB (3306) |
+| Μεταβλητή | Ρόλος           |
+| ------------------ | -------------------- |
+| aws_region         | Περιοχή AWS   |
+| rest_ami           | AMI από prepare   |
+| db_ami             | Ubuntu AMI για DB |
+| key_name           | EC2 Key Pair         |
+| db_port            | Θύρα DB (3306)   |
 
 ### Αποθήκευση τιμών
 
@@ -207,10 +208,12 @@ terraform/deploy/terraform.tfvars
 Παράδειγμα:
 
 ```hcl
-rest_ami = "ami-08ac0fd61a28bbec7"
-db_ami   = "ami-01f79b1e4a5c64257"
-key_name = "terraform-key"
+rest_ami = "<REST_SERVICE_AMI_ID>"
+db_ami   = "<DB_AMI_ID>"
+key_name = "<EC2_KEY_PAIR_NAME>"
 ```
+
+Οι τιμές στο παράδειγμα είναι placeholders και αντικαθίστανται από πραγματικές τιμές πριν την εκτέλεση.
 
 ### Εκτέλεση
 
@@ -257,14 +260,8 @@ cd terraform/prepare
 terraform destroy
 ```
 
-## Σημαντικές Παρατηρήσεις για τις Μεταβλητές
+## Παρατηρήσεις για τις Μεταβλητές
 
 - Οι μεταβλητές **δεν** hardcoded μέσα στα `.tf` αρχεία.
 - Οι τιμές αποθηκεύονται σε `terraform.tfvars` (ξεχωριστό αρχείο ανά φάση).
 - Το artefact της prepare (`rest_ami_id`) μεταφέρεται χειροκίνητα στο deploy.
-
-Αυτή η προσέγγιση:
-
-- κάνει σαφή τον κύκλο ζωής,
-- αποφεύγει σύγχυση state,
-- ευθυγραμμίζεται με τη διδακτική προσέγγιση του μαθήματος.

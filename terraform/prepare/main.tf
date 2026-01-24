@@ -8,20 +8,20 @@ terraform {
 }
 
 provider "aws" {
-  # Η περιοχή ορίζεται μέσω μεταβλητής ώστε η προετοιμασία AMI να είναι αναπαραγώγιμη.
+  # Region is configurable to keep AMI preparation reproducible.
   region = var.aws_region
 }
 
 # --------------------
-# ΠΡΟΣΩΡΙΝΟ ΣΤΙΓΜΙΟΤΥΠΟ ΠΡΟΕΤΟΙΜΑΣΙΑΣ (Κατασκευαστής)
+# TEMPORARY PREP INSTANCE (BUILDER)
 # --------------------
 resource "aws_instance" "rest_tmp" {
-  # Χρησιμοποιείται καθαρό Ubuntu AMI ώστε να εγκατασταθεί μόνο το περιβάλλον εκτέλεσης.
+  # Base Ubuntu AMI so only the runtime environment is installed.
   ami           = var.base_ami
   instance_type = "t2.micro"
   key_name      = var.key_name
 
-  # Ελάχιστο bootstrap: εγκατάσταση JRE ώστε η AMI να περιλαμβάνει μόνο περιβάλλον εκτέλεσης.
+  # Minimal bootstrap: install JRE so the AMI includes only runtime.
   user_data = <<-EOF
     #!/bin/bash
     apt update -y
@@ -34,19 +34,19 @@ resource "aws_instance" "rest_tmp" {
 }
 
 # --------------------
-# ΔΙΑΚΟΠΗ ΣΤΙΓΜΙΟΤΥΠΟΥ ΠΡΙΝ ΤΗΝ ΕΙΚΟΝΟΛΗΨΙΑ (Συνεπής AMI)
+# STOP INSTANCE BEFORE IMAGE CREATION (CONSISTENT AMI)
 # --------------------
 resource "aws_ec2_instance_state" "stop_rest_tmp" {
-  # Η διακοπή διασφαλίζει συνεπές στιγμιότυπο του συστήματος αρχείων.
+  # Stopping ensures a consistent filesystem snapshot.
   instance_id = aws_instance.rest_tmp.id
   state       = "stopped"
 }
 
 # --------------------
-# ΔΗΜΙΟΥΡΓΙΑ AMI ΑΠΟ ΤΟ ΠΡΟΣΩΡΙΝΟ ΣΤΙΓΜΙΟΤΥΠΟ
+# AMI CREATION FROM TEMPORARY INSTANCE
 # --------------------
 resource "aws_ami_from_instance" "rest_ami" {
-  # Η AMI περιλαμβάνει μόνο το περιβάλλον εκτέλεσης, όχι επιχειρησιακό λογισμικό.
+  # AMI contains only the runtime environment, not business software.
   name               = "citizen-rest-ami"
   source_instance_id = aws_instance.rest_tmp.id
 

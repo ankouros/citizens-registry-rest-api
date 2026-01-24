@@ -19,6 +19,13 @@ docker run -d \
   -e MYSQL_PASSWORD=apppass \
   mysql:8.4
 
+for _ in $(seq 1 60); do
+  if docker exec mysql-db mysqladmin ping -h 127.0.0.1 -uroot -prootpass --silent >/dev/null 2>&1; then
+    break
+  fi
+  sleep 2
+done
+
 docker run -d \
   --name citizen-service \
   --network $NETWORK \

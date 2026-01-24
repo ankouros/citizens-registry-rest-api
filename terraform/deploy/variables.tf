@@ -1,27 +1,27 @@
 variable "aws_region" {
-  description = "Περιοχή AWS όπου θα αναπτυχθεί η υποδομή"
+  description = "AWS region where the infrastructure is deployed"
   type        = string
-  # Διατηρείται προεπιλογή για συνέπεια με το εργαστηριακό σενάριο.
+  # Default kept for consistency with the lab scenario.
   default     = "eu-central-1"
 }
 
 variable "rest_ami" {
-  description = "AMI ID της REST υπηρεσίας που παράγεται στη φάση prepare"
+  description = "REST service AMI ID produced in prepare"
   type        = string
 }
 
 variable "db_ami" {
-  description = "AMI ID για το instance της βάσης δεδομένων"
+  description = "AMI ID for the database instance"
   type        = string
 }
 
 variable "key_name" {
-  description = "Όνομα EC2 key pair για διοικητική πρόσβαση"
+  description = "EC2 key pair name for administrative access"
   type        = string
 }
 variable "db_port" {
-  description = "Θύρα στην οποία ακούει η βάση (π.χ. 3306 για MySQL)"
+  description = "Database port (e.g., 3306 for MySQL)"
   type        = number
-  # Προεπιλογή MySQL για το σενάριο της άσκησης.
+  # MySQL default for the lab scenario.
   default     = 3306
 }

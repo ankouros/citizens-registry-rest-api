@@ -9,6 +9,11 @@ services:
       MYSQL_PASSWORD: apppass
     volumes:
       - citizen-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
     networks:
       - citizen-net
 
@@ -17,7 +22,8 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/citizens
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver

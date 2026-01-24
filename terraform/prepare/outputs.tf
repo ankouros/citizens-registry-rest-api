@@ -1,5 +1,5 @@
-// Επιστρέφει το AMI που θα τροφοδοτήσει τη φάση deploy.
+// Outputs the AMI used by the deploy phase.
 output "rest_ami_id" {
-  description = "AMI ID που παράγεται στη φάση prepare για χρήση στη φάση deploy"
+  description = "AMI ID produced in prepare and consumed by deploy"
   value       = aws_ami_from_instance.rest_ami.id
 }

@@ -1,16 +1,16 @@
 variable "aws_region" {
-  description = "Περιοχή AWS όπου εκτελείται η φάση prepare"
+  description = "AWS region used for the prepare phase"
   type        = string
-  # Προεπιλογή συμβατή με το εκπαιδευτικό σενάριο.
+  # Default aligned with the lab scenario.
   default     = "eu-central-1"
 }
 
 variable "base_ami" {
-  description = "AMI βάσης Ubuntu πάνω στην οποία εγκαθίσταται μόνο το runtime"
+  description = "Base Ubuntu AMI used to install only the runtime"
   type        = string
 }
 
 variable "key_name" {
-  description = "Όνομα EC2 key pair για διοικητική πρόσβαση στο προσωρινό instance"
+  description = "EC2 key pair name for admin access to the temporary instance"
   type        = string
 }
