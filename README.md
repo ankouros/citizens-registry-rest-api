@@ -67,7 +67,7 @@ citizens-registry-rest-api/
 - Χρήση **Jakarta Persistence (JPA)**
 - **Unit tests οντοτήτων** (constructors, getters/setters)
 
-✔ Καλύπτει τις απαιτήσεις δοκιμών μονάδων οντοτήτων σύμφωνα με την εκφώνηση
+ Καλύπτει τις απαιτήσεις δοκιμών μονάδων οντοτήτων σύμφωνα με την εκφώνηση
 **(12/12 μονάδες)**
 ----------------------
 
@@ -88,13 +88,13 @@ citizens-registry-rest-api/
   - Service (business logic)
   - Repository (persistence)
 
-#### 🧪 Δοκιμές στο citizen-service
+####  Δοκιμές στο citizen-service
 
 - **Configuration Tests** (Spring Context & Beans)
 - **ORM Tests** (save / find / delete μέσω JPA)
 - **Unit Tests επιχειρησιακής λογικής**
 
-✔ Καλύπτει:
+ Καλύπτει:
 
 - 6/6 → Δοκιμές ρύθμισης
 - 12/12 → Δοκιμές ORM
@@ -115,7 +115,7 @@ citizens-registry-rest-api/
 - Δεν εκκινεί web server
   (`spring.main.web-application-type=none`)
 
-✔ Καλύπτει το **1ο προαιρετικό ζητούμενο**, σύμφωνα με τις προβλεπόμενες απαιτήσεις
+ Καλύπτει το **1ο προαιρετικό ζητούμενο**, σύμφωνα με τις προβλεπόμενες απαιτήσεις
 
 ---
 
@@ -128,7 +128,7 @@ citizens-registry-rest-api/
 - Maven **Failsafe Plugin**
 - Δοκιμή όλων των REST endpoints
 
-✔ Δοκιμάζονται **και οι 5 REST μέθοδοι**
+ Δοκιμάζονται **και οι 5 REST μέθοδοι**
 → **20/20 μονάδες Integration Tests**
 
 ---
@@ -173,7 +173,7 @@ mvn clean verify
 - εκτελεί **unit tests** (Surefire) σε όλα τα modules
 - εκτελεί **integration tests** (Failsafe) στο module `citizen-it`
 
-✔ **BUILD SUCCESS – όλα τα tests επιτυχή**
+ **BUILD SUCCESS – όλα τα tests επιτυχή**
 
 ---
 
@@ -238,7 +238,7 @@ mvn clean verify
 
 ---
 
-## 📊 Στρατηγική και Κάλυψη Δοκιμών
+##  Στρατηγική και Κάλυψη Δοκιμών
 
 Η στρατηγική δοκιμών του έργου ακολουθεί πολυεπίπεδη προσέγγιση, ώστε να
 διασφαλίζεται η ορθότητα της εφαρμογής από το επίπεδο των οντοτήτων
@@ -248,7 +248,7 @@ mvn clean verify
 
 ---
 
-## 📊 Κάλυψη Δοκιμών (Test Coverage Matrix)
+##  Κάλυψη Δοκιμών (Test Coverage Matrix)
 
 Ο ακόλουθος πίνακας συνοψίζει, σε μορφή matrix, τη σχέση ανάμεσα στα υπο-έργα, τα είδη δοκιμών,
 τις κλάσεις / endpoints που ελέγχονται και την αντίστοιχη ενότητα μαθήματος.
@@ -269,25 +269,25 @@ mvn clean verify
 
 ---
 
-### 📐 Αντιστοίχιση Δοκιμών με Κριτήρια Αξιολόγησης
+###  Αντιστοίχιση Δοκιμών με Κριτήρια Αξιολόγησης
 
 Ο παρακάτω πίνακας αποτυπώνει ρητά τη σύνδεση των υλοποιημένων δοκιμών
 με τα κριτήρια βαθμολόγησης της εκφώνησης:
 
-| Κατηγορία Δοκιμών                           | Module          | Βαθμολογία Εκφώνησης | Κάλυψη |
-| ----------------------------------------------------------- | --------------- | --------------------------------------- | ------------ |
-| Unit tests οντοτήτων (Entities)                    | citizen-domain  | 12 / 12                                 | ✔           |
-| Δοκιμές ρύθμισης (Spring Context)            | citizen-service | 6 / 6                                   | ✔           |
-| Δοκιμές ORM / Repository                             | citizen-service | 12 / 12                                 | ✔           |
-| Δοκιμές επιχειρησιακής λογικής  | citizen-service | 12 / 12                                 | ✔           |
-| Δοκιμές ενοποίησης REST API (Rest-Assured) | citizen-it      | 20 / 20                                 | ✔           |
+| Κατηγορία Δοκιμών                           | Module          | Κάλυψη |
+| ----------------------------------------------------------- | --------------- | ------------ |
+| Unit tests οντοτήτων (Entities)                    | citizen-domain  |            |
+| Δοκιμές ρύθμισης (Spring Context)            | citizen-service |            |
+| Δοκιμές ORM / Repository                             | citizen-service |            |
+| Δοκιμές επιχειρησιακής λογικής  | citizen-service |            |
+| Δοκιμές ενοποίησης REST API (Rest-Assured) | citizen-it      |            |
 
 Με βάση τα παραπάνω, η κάλυψη δοκιμών ικανοποιεί πλήρως τα κριτήρια αξιολόγησης
 των αντίστοιχων ενοτήτων.
 
 ---
 
-## 📊 Κάλυψη Αξιολόγησης
+##  Κάλυψη Αξιολόγησης
 
 ---
 
@@ -295,15 +295,15 @@ mvn clean verify
 
 | Απαίτηση                       | Κάλυψη |
 | -------------------------------------- | ------------ |
-| RESTful λειτουργικότητα | ✔           |
-| Persistence / ORM                      | ✔           |
-| Maven οργάνωση                 | ✔           |
-| Client εφαρμογή                | ✔           |
-| Unit tests οντοτήτων          | ✔           |
-| Configuration tests                    | ✔           |
-| ORM tests                              | ✔           |
-| Integration tests                      | ✔           |
-| CI/CD                                  | ✔           |
+| RESTful λειτουργικότητα |            |
+| Persistence / ORM                      |            |
+| Maven οργάνωση                 |            |
+| Client εφαρμογή                |            |
+| Unit tests οντοτήτων          |            |
+| Configuration tests                    |            |
+| ORM tests                              |            |
+| Integration tests                      |            |
+| CI/CD                                  |            |
 
 ---
 
